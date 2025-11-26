@@ -11,7 +11,7 @@ import NotFound from '../pages/NotFound';
 import Services from '../pages/Services/Services';
 import Login from '../pages/Auth/Login';
 import SignUp from '../pages/Auth/SignUp';
-import ResetPassword from '../pages/Auth/Resetpassord';
+import ResetPassword from '../pages/Auth/ResetPassword';
 import Dashboard from '../pages/Dashboard';
 import MyServices from '../pages/Dashboard/MyServices';
 import ComplianceTracker from '../pages/Dashboard/ComplianceTracker';
