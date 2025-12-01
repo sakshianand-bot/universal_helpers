@@ -9,12 +9,15 @@ export default function About() {
   const autoRotateRef = useRef(null);
   const sectionRef = useRef(null);
 
+  // Add Font Awesome CSS in your index.html or App.js
+  // <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
   const sections = [
-    { id: 'pathway', label: 'The Pathway' },
-    { id: 'how-it-works', label: 'How It Works' },
-    { id: 'training', label: 'Training System' },
-    { id: 'benefits', label: 'Your Benefits' },
-    { id: 'academy', label: 'Private Academy' }
+    { id: 'pathway', label: 'The Pathway', icon: 'fa-solid fa-route' },
+    { id: 'how-it-works', label: 'How It Works', icon: 'fa-solid fa-gears' },
+    { id: 'training', label: 'Training System', icon: 'fa-solid fa-graduation-cap' },
+    { id: 'benefits', label: 'Your Benefits', icon: 'fa-solid fa-star' },
+    { id: 'academy', label: 'Private Academy', icon: 'fa-solid fa-building-columns' }
   ];
 
   const pathwaySteps = [
@@ -22,29 +25,25 @@ export default function About() {
       step: 1,
       title: 'Work & Contribute',
       description: 'Complete tasks and projects within the organization',
-      outcome: 'Build Private Credits through meaningful work',
-      icon: '💼'
+      outcome: 'Build Private Credits through meaningful work'
     },
     {
       step: 2,
       title: 'Earn Training Access',
       description: 'Use accumulated credits for Academy enrollment',
-      outcome: 'Unlock private domain knowledge and principles',
-      icon: '🎓'
+      outcome: 'Unlock private domain knowledge and principles'
     },
     {
       step: 3,
       title: 'Foundational Training',
       description: 'Master essential private operations concepts',
-      outcome: 'Complete contracts, sovereignty, PMA, and trusts training',
-      icon: '🏛️'
+      outcome: 'Complete contracts, sovereignty, PMA, and trusts training'
     },
     {
       step: 4,
       title: 'Advance to Premium',
       description: 'Optional progression to mastery courses',
-      outcome: 'Continue education without financial burden',
-      icon: '⭐'
+      outcome: 'Continue education without financial burden'
     }
   ];
 
@@ -53,36 +52,30 @@ export default function About() {
       module: 'Foundation',
       courses: ['Private Contracts', 'Sovereign Principles', 'PMA Fundamentals', 'Trust Structures', 'Private Operations'],
       duration: '8-12 weeks',
-      credits: 100,
-      icon: '🔰'
+      credits: 100
     },
     {
       module: 'Premium Mastery',
       courses: ['Advanced Contracts', 'Private Banking', 'Asset Protection', 'International Law', 'Master Operations'],
       duration: '12-16 weeks',
-      credits: 200,
-      icon: '🎯'
+      credits: 200
     }
   ];
 
   const benefits = [
     {
-      icon: '🧠',
       title: 'Knowledgeable',
       description: 'Master the principles and structure of private operations'
     },
     {
-      icon: '⚡',
       title: 'Self-Reliant',
       description: 'Build confidence to operate independently in private domains'
     },
     {
-      icon: '🚀',
       title: 'Empowered',
       description: 'Gain the tools and knowledge for true personal empowerment'
     },
     {
-      icon: '🛡️',
       title: 'Prepared',
       description: 'Ready to operate fully in private with complete preparation'
     }
@@ -92,22 +85,22 @@ export default function About() {
     {
       metric: 'Lifestyle Stability',
       description: 'Build a stable foundation for long-term personal growth',
-      icon: '🏠'
+      icon: ''
     },
     {
       metric: 'Financial Confidence',
       description: 'Operate with financial certainty and strategic advantage',
-      icon: '💎'
+      icon: ''
     },
     {
       metric: 'Long-term Growth',
       description: 'Sustainable personal and professional development',
-      icon: '📈'
+      icon: ''
     },
     {
       metric: 'Private Domain Access',
       description: 'Full integration into private systems and operations',
-      icon: '🔐'
+      icon: ''
     }
   ];
 
@@ -241,38 +234,31 @@ export default function About() {
           className="mb-12"
         >
           <div className="flex flex-col items-center space-y-4">
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 w-full max-w-4xl mx-auto">
               {sections.map((tab) => (
                 <motion.button
                   key={tab.id}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                   onClick={() => handleSectionClick(tab.id)}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all ${
+                  className={`flex flex-col items-center justify-center p-4 rounded-lg transition-all duration-300 ${
                     activeSection === tab.id
-                      ? 'bg-gradient-to-r from-amber-600 to-red-800 text-white shadow-lg shadow-amber-700/25'
-                      : 'bg-gray-800/80 text-gray-300 hover:bg-gray-700/80 border border-amber-900/50'
+                      ? 'bg-gradient-to-br from-amber-900/90 to-red-900/90 border border-amber-800/80 shadow-lg shadow-amber-900/50'
+                      : 'bg-gray-800/60 border border-gray-700 hover:border-amber-500/50 hover:bg-gray-700/60'
                   }`}
+                  whileHover={{ y: -3, scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                 >
-                  {tab.label}
+                  <div className={`text-2xl mb-2 ${
+                    activeSection === tab.id ? 'text-amber-300' : 'text-gray-300'
+                  }`}>
+                    <i className={tab.icon}></i>
+                  </div>
+                  <span className={`text-sm font-medium text-center ${
+                    activeSection === tab.id ? 'text-white' : 'text-gray-300'
+                  }`}>
+                    {tab.label}
+                  </span>
                 </motion.button>
               ))}
-            </div>
-
-            {/* Auto-rotation Status */}
-            <div className="flex items-center space-x-4 text-sm text-gray-400">
-              <div className="flex space-x-1">
-                {sections.map((_, index) => (
-                  <div
-                    key={index}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      index === getCurrentSectionIndex() 
-                        ? 'bg-amber-600' 
-                        : 'bg-gray-600'
-                    }`}
-                  />
-                ))}
-              </div>
             </div>
           </div>
         </motion.section>
@@ -310,19 +296,19 @@ export default function About() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 + index * 0.1 }}
                       whileHover={{ scale: 1.02, y: -5 }}
-                      className="bg-gray-900/80 backdrop-blur-md rounded-2xl p-6 border border-amber-900/50 hover:border-amber-600 transition-all duration-300 group"
+                      className="bg-transparent rounded-2xl p-6 border border-amber-500/10 hover:border-amber-500/20 transition-all duration-300 group"
                     >
                       <div className="flex items-start space-x-4">
                         <div className="text-3xl">{step.icon}</div>
                         <div className="flex-1">
                           <div className="flex items-center space-x-2 mb-2">
-                            <span className="text-amber-500 font-bold text-lg">Step {step.step}</span>
+                            <span className="text-amber-400/70 font-bold text-lg">Step {step.step}</span>
                             <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
                             <h3 className="text-xl font-bold text-white">{step.title}</h3>
                           </div>
                           <p className="text-gray-300 mb-3">{step.description}</p>
-                          <div className="bg-amber-900/30 rounded-lg p-3 border border-amber-800/50">
-                            <p className="text-amber-200 text-sm font-semibold">Outcome: {step.outcome}</p>
+                          <div className="bg-transparent rounded-lg p-3 border border-transparent">
+                            <p className="text-amber-200/80 text-sm font-medium">Outcome: {step.outcome}</p>
                           </div>
                         </div>
                       </div>
@@ -330,26 +316,6 @@ export default function About() {
                   ))}
                 </div>
 
-                {/* Progress Visualization */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.8 }}
-                  className="bg-gray-900/60 rounded-2xl p-8 border border-amber-900/50"
-                >
-                  <h3 className="text-2xl font-bold text-white text-center mb-6">Your Journey Progress</h3>
-                  <div className="w-full bg-gray-700 rounded-full h-4 mb-4">
-                    <motion.div
-                      className="bg-gradient-to-r from-amber-600 to-red-800 h-4 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${progress}%` }}
-                      transition={{ duration: 1 }}
-                    ></motion.div>
-                  </div>
-                  <p className="text-gray-300 text-center">
-                    Simulated progress through the private pathway system
-                  </p>
-                </motion.div>
               </motion.section>
             )}
 
@@ -374,9 +340,8 @@ export default function About() {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-gradient-to-br from-amber-900/50 to-red-900/30 rounded-2xl p-6 border border-amber-600/50 text-center"
+                    className="bg-transparent rounded-2xl p-6 border border-amber-500/10 hover:border-amber-500/20 transition-all duration-300 text-center"
                   >
-                    <div className="text-4xl mb-4">💼</div>
                     <h3 className="text-xl font-bold text-white mb-3">Work & Contribute</h3>
                     <p className="text-gray-300">
                       Complete meaningful tasks and projects to build your Private Credits pool
@@ -387,9 +352,8 @@ export default function About() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-gradient-to-br from-amber-900/50 to-red-900/30 rounded-2xl p-6 border border-amber-600/50 text-center"
+                    className="bg-transparent rounded-2xl p-6 border border-amber-500/10 hover:border-amber-500/20 transition-all duration-300 text-center"
                   >
-                    <div className="text-4xl mb-4">🎓</div>
                     <h3 className="text-xl font-bold text-white mb-3">Earn Training Access</h3>
                     <p className="text-gray-300">
                       Use accumulated credits to enroll in Creditor Academy's private programs
@@ -400,9 +364,8 @@ export default function About() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="bg-gradient-to-br from-amber-900/50 to-red-900/30 rounded-2xl p-6 border border-amber-600/50 text-center"
+                    className="bg-transparent rounded-2xl p-6 border border-amber-500/10 hover:border-amber-500/20 transition-all duration-300 text-center"
                   >
-                    <div className="text-4xl mb-4">🚀</div>
                     <h3 className="text-xl font-bold text-white mb-3">Advance Confidently</h3>
                     <p className="text-gray-300">
                       Progress through training without financial burden, fully prepared for private operations
@@ -437,10 +400,9 @@ export default function About() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 + index * 0.1 }}
                       whileHover={{ scale: 1.02 }}
-                      className="bg-gray-900/80 backdrop-blur-md rounded-2xl p-6 border border-amber-900/50 hover:border-amber-600 transition-all duration-300"
+                      className="bg-gray-900/20 backdrop-blur-sm rounded-2xl p-6 border border-amber-900/20 hover:border-amber-600/30 transition-all duration-300"
                     >
-                      <div className="flex items-center space-x-3 mb-4">
-                        <div className="text-3xl">{module.icon}</div>
+                      <div className="mb-4">
                         <h3 className="text-2xl font-bold text-white">{module.module}</h3>
                       </div>
                       
@@ -457,11 +419,11 @@ export default function About() {
                       </div>
 
                       <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div className="bg-amber-900/30 rounded-lg p-3 text-center">
+                        <div className="bg-amber-900/20 rounded-lg p-3 text-center">
                           <p className="text-amber-200 font-semibold">Duration</p>
                           <p className="text-white">{module.duration}</p>
                         </div>
-                        <div className="bg-red-900/30 rounded-lg p-3 text-center">
+                        <div className="bg-red-900/20 rounded-lg p-3 text-center">
                           <p className="text-red-200 font-semibold">Credits Required</p>
                           <p className="text-white">{module.credits}</p>
                         </div>
@@ -497,7 +459,7 @@ export default function About() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 + index * 0.1 }}
                       whileHover={{ scale: 1.02, y: -5 }}
-                      className="bg-gray-900/80 backdrop-blur-md rounded-2xl p-6 border border-amber-900/50 hover:border-amber-600 transition-all duration-300 group"
+                      className="bg-transparent rounded-2xl p-6 border border-amber-500/10 hover:border-amber-500/20 transition-all duration-300 group"
                     >
                       <div className="text-4xl mb-4 text-center group-hover:scale-110 transition-transform duration-300">
                         {benefit.icon}
@@ -516,7 +478,7 @@ export default function About() {
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.5 + index * 0.1 }}
-                      className="bg-gradient-to-br from-amber-900/40 to-red-900/20 rounded-xl p-4 text-center border border-amber-700/30"
+                      className="bg-transparent rounded-xl p-4 text-center border border-amber-700/30"
                     >
                       <div className="text-2xl mb-2">{outcome.icon}</div>
                       <h4 className="text-lg font-bold text-white mb-2">{outcome.metric}</h4>
@@ -545,7 +507,7 @@ export default function About() {
                   </p>
                 </div>
 
-                <div className="bg-gradient-to-br from-amber-900/30 to-red-900/20 rounded-3xl p-8 border border-amber-600/50 mb-8">
+                <div className="bg-transparent rounded-3xl p-8 border border-amber-600/50 mb-8">
                   <h3 className="text-2xl font-bold text-white text-center mb-6">Academy Mission</h3>
                   <p className="text-gray-200 text-lg text-center leading-relaxed">
                     To create a workforce and community of individuals who are knowledgeable, self-reliant, 
@@ -559,7 +521,7 @@ export default function About() {
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="bg-gray-900/80 rounded-2xl p-6 border border-amber-900/50"
+                    className="bg-transparent rounded-2xl p-6 border border-amber-900/50"
                   >
                     <h4 className="text-xl font-bold text-amber-400 mb-4">What You'll Master</h4>
                     <ul className="space-y-3">
@@ -589,14 +551,14 @@ export default function About() {
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="bg-gray-900/80 rounded-2xl p-6 border border-amber-900/50"
+                    className="bg-transparent rounded-2xl p-6 border border-amber-900/50"
                   >
                     <h4 className="text-xl font-bold text-amber-400 mb-4">The Result</h4>
                     <p className="text-gray-300 mb-4">
                       Graduates emerge with the confidence, knowledge, and practical skills to operate 
                       successfully in private domains, fully prepared for long-term stability and growth.
                     </p>
-                    <div className="bg-amber-900/30 rounded-lg p-4 border border-amber-800/50">
+                    <div className="bg-transparent rounded-lg p-4 border border-amber-800/50">
                       <p className="text-amber-200 font-semibold text-center">
                         "From public participant to private professional — your journey to empowerment starts here."
                       </p>
@@ -615,7 +577,7 @@ export default function About() {
           transition={{ delay: 0.8 }}
           className="text-center"
         >
-          <div className="bg-gradient-to-r from-black via-amber-900 to-amber-800 rounded-3xl p-12 border border-amber-600 shadow-2xl shadow-amber-900/30">
+          <div className="bg-transparent rounded-3xl p-12">
             <h2 className="text-3xl font-bold text-white mb-4">Ready to Begin Your Private Journey?</h2>
             <p className="text-amber-100 text-lg mb-8 max-w-2xl mx-auto">
               Join the pathway to private membership and transform your future through earned knowledge and access.

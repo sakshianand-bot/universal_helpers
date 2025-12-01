@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, LogOut, ChevronDown } from 'lucide-react';
+import { Menu, X, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import logo from '../assets/logo.png';
@@ -16,9 +16,18 @@ export default function Navbar() {
   const handleLogout = () => {
     logout()
     navigate('/')
+    scrollToTop()
   }
 
-  // Add scroll effect
+  // ⭐ Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  // Scroll Effect
   React.useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
@@ -40,7 +49,7 @@ export default function Navbar() {
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center space-x-3">
+          <Link to="/" onClick={scrollToTop} className="flex items-center space-x-3">
             <div className="flex-shrink-0 h-12 w-12 flex items-center justify-center">
               <img 
                 src={logo} 
@@ -57,6 +66,7 @@ export default function Navbar() {
               <Link 
                 key={link.name}
                 to={link.path} 
+                onClick={scrollToTop}
                 className="relative text-gray-300 hover:text-white transition-colors font-medium group"
               >
                 {link.name}
@@ -90,6 +100,7 @@ export default function Navbar() {
             <div className="hidden md:flex items-center">
               <Link 
                 to="/signup" 
+                onClick={scrollToTop}
                 className="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-red-800 to-red-900 hover:from-red-700 hover:to-red-800 rounded-full transition-all duration-300 shadow-lg hover:shadow-red-500/20 hover:scale-105 border border-red-700/50"
               >
                 Sign Up
@@ -119,12 +130,17 @@ export default function Navbar() {
             className="md:hidden bg-black/95 backdrop-blur-sm overflow-hidden"
           >
             <div className="px-2 pt-2 pb-4 space-y-1 sm:px-3">
+              
+              {/* Mobile Nav Links */}
               {navLinks.map((link) => (
                 <Link 
                   key={link.name}
                   to={link.path} 
+                  onClick={() => {
+                    scrollToTop()
+                    setIsOpen(false)
+                  }}
                   className="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:bg-red-900/50 hover:text-white transition-colors"
-                  onClick={() => setIsOpen(false)}
                 >
                   {link.name}
                 </Link>
@@ -146,6 +162,7 @@ export default function Navbar() {
                       onClick={() => {
                         handleLogout()
                         setIsOpen(false)
+                        scrollToTop()
                       }}
                       className="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-red-900/50 hover:bg-red-800 rounded-md transition-colors"
                     >
@@ -159,14 +176,20 @@ export default function Navbar() {
                   <div className="space-y-2">
                     <Link
                       to="/login"
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => {
+                        scrollToTop()
+                        setIsOpen(false)
+                      }}
                       className="block w-full px-4 py-2 text-center text-sm font-medium text-white hover:bg-gray-800 rounded-md transition-colors"
                     >
                       Login
                     </Link>
                     <Link
                       to="/signup"
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => {
+                        scrollToTop()
+                        setIsOpen(false)
+                      }}
                       className="block w-full px-4 py-2 text-center text-sm font-medium text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 rounded-md transition-colors"
                     >
                       Sign Up
@@ -181,3 +204,4 @@ export default function Navbar() {
     </nav>
   )
 }
+

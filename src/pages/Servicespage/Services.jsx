@@ -508,7 +508,7 @@ export default function ServiceNeighborhood() {
             <div className="relative">
               <input
                 type="text"
-                placeholder="🔍 Search Have Dominion services... (HAM radio, credit, financial, etc.)"
+                placeholder="Search Have Dominion services... (HAM radio, credit, financial, etc.)"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full px-6 py-4 bg-black/30 border border-gray-700 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 backdrop-blur-sm text-lg transition-all duration-300 hover:border-gray-600"

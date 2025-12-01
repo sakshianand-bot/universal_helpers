@@ -307,23 +307,23 @@ const Home = () => {
                   Dominion
                 </span>
               </h1>
-              <p className="text-xl text-red-100 leading-relaxed">
+              <p className="text-base text-red-100 leading-relaxed">
                 Your pathway to privacy, financial independence, and professional mastery. 
                 Join our global conglomerate and build the life you deserve.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Link 
                   to="/creditor-academy" 
-                  className="relative overflow-hidden group bg-gradient-to-r from-red-800 to-red-900 text-white font-semibold py-4 px-8 rounded-full shadow-lg flex items-center justify-center space-x-2 transition-all duration-300 hover:from-red-700 hover:to-red-800 hover:shadow-red-500/20 hover:scale-105 border border-red-700/50"
+                  className="relative overflow-hidden group bg-gradient-to-r from-red-800 to-red-900 text-white text-sm font-medium py-2.5 px-6 rounded-full shadow-lg flex items-center justify-center space-x-2 transition-all duration-300 hover:from-red-700 hover:to-red-800 hover:shadow-red-500/20 hover:scale-105 border border-red-700/50"
                 >
-                  <GraduationCap className="h-5 w-5" />
+                  <GraduationCap className="h-4 w-4" />
                   <span>Start at Creditor Academy</span>
                 </Link>
                 <Link 
                   to="tel:1-888-997-3744"
-                  className="relative overflow-hidden group border-2 border-red-700/80 text-red-400 font-medium py-4 px-8 rounded-full transition-all duration-300 hover:bg-red-900/30 hover:border-red-600/80 hover:scale-105 flex items-center justify-center space-x-2"
+                  className="relative overflow-hidden group border-2 border-red-700/80 text-red-400 text-sm font-medium py-2.5 px-6 rounded-full transition-all duration-300 hover:bg-red-900/30 hover:border-red-600/80 hover:scale-105 flex items-center justify-center space-x-2"
                 >
-                  <Phone className="h-5 w-5" />
+                  <Phone className="h-4 w-4" />
                   <span>Call 1-888-997-3744</span>
                 </Link>
               </div>
@@ -343,7 +343,7 @@ const Home = () => {
               </div>
             </div>
             <div className="relative">
-              <div className="backdrop-blur-sm rounded-3xl p-8 border border-red-600/30">
+              <div className="backdrop-blur-sm rounded-3xl p-8">
                 <div className="overflow-hidden rounded-2xl w-full h-80 bg-gradient-to-br from-red-900/90 to-black/90 relative shadow-2xl shadow-red-500/20">
                   <img 
                     src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
@@ -536,9 +536,7 @@ const Home = () => {
       <section className="py-20 bg-black relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold gold-gradient bg-clip-text text-transparent mb-6">
-              Your Journey to Dominion
-            </h2>
+            
             <p className="text-xl text-amber-100 max-w-3xl mx-auto">
               Simple steps to transform your life and career
             </p>
@@ -595,10 +593,10 @@ const Home = () => {
 
       {/* Services Section */}
       <section id="services" className="py-20 lg:py-28 bg-black relative overflow-hidden">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold crimson-gradient bg-clip-text text-transparent animate-gradient mb-6">
-              Our Services
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Available Services
             </h2>
             <p className="text-xl text-red-100 max-w-3xl mx-auto">
               Comprehensive solutions for automotive, education, licensing, and financial services. 
@@ -692,7 +690,7 @@ const Home = () => {
       <section className="py-20 bg-gradient-to-b from-black to-red-950/30 relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold crimson-gradient bg-clip-text text-transparent mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Success Stories
             </h2>
             <p className="text-xl text-red-100 max-w-3xl mx-auto">
@@ -748,7 +746,7 @@ const Home = () => {
       <section className="py-20 lg:py-28 bg-gradient-to-b from-red-950/30 to-black relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold crimson-gradient bg-clip-text text-transparent animate-gradient mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Smart Document Management
             </h2>
             <p className="text-xl text-red-100 max-w-3xl mx-auto">
@@ -777,52 +775,11 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Service Selector */}
-      <section className="py-20 bg-black relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold crimson-gradient bg-clip-text text-transparent mb-6">
-              Find Your Path
-            </h2>
-            <p className="text-xl text-red-100 max-w-3xl mx-auto">
-              Select your goal and discover the perfect service for you
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {[
-              { icon: "💼", title: "Career Change", services: ["CDL Training", "Creditor Academy"] },
-              { icon: "💳", title: "Financial Services", services: ["Credit Tradelines", "Score Building"] },
-              { icon: "📱", title: "Tech & Privacy", services: ["Software Development", "HAM Radio"] }
-            ].map((category, index) => (
-              <div key={index} className="bg-black/50 backdrop-blur-sm rounded-2xl p-6 border border-red-600/30 text-center transition-all duration-500 hover:scale-105 group cursor-pointer">
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {category.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-4">{category.title}</h3>
-                <div className="space-y-2">
-                  {category.services.map((service, serviceIndex) => (
-                    <div key={serviceIndex} className="text-red-200 text-sm py-2 px-3 bg-red-600/10 rounded-lg">
-                      {service}
-                    </div>
-                  ))}
-                </div>
-                <button className="w-full mt-4 bg-red-600 text-white font-semibold py-2 rounded-lg transition-all duration-300 hover:scale-105">
-                  Explore Options
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Creditor Academy Section */}
       <section className="py-20 lg:py-28 bg-black relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold gold-gradient bg-clip-text text-transparent animate-gradient mb-6">
-              Creditor Academy
-            </h2>
+            <div className="w-full max-w-4xl h-1.5 bg-gradient-to-r from-transparent via-amber-400/70 to-transparent mx-auto mb-8 rounded-full"></div>
             <p className="text-xl text-amber-100 max-w-3xl mx-auto">
               Your pathway to financial mastery and private sector success. Start with basics, advance to premium with accumulated credits.
             </p>
@@ -845,43 +802,6 @@ const Home = () => {
                   {index === 0 ? 'Start Basic Training' : 'Enroll in Premium'}
                 </button>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-20 bg-black relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold crimson-gradient bg-clip-text text-transparent mb-6">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-xl text-red-100 max-w-3xl mx-auto">
-              Get answers to common questions about our services
-            </p>
-          </div>
-          
-          <div className="max-w-4xl mx-auto space-y-4">
-            {[
-              {
-                question: "How long does CDL training take?",
-                answer: "Our CDL training programs typically take 4-6 weeks, with flexible scheduling options available."
-              },
-              {
-                question: "Is financial aid available for Creditor Academy?",
-                answer: "Yes, we offer payment plans and financing options. Contact us to discuss available options."
-              },
-              {
-                question: "Do you provide job placement assistance?",
-                answer: "Absolutely! We have partnerships with major employers and offer lifetime placement support."
-              },
-              {
-                question: "Are your services available nationwide?",
-                answer: "Yes, we serve clients across the United States with both in-person and remote options."
-              }
-            ].map((faq, index) => (
-              <FAQItem key={index} question={faq.question} answer={faq.answer} />
             ))}
           </div>
         </div>

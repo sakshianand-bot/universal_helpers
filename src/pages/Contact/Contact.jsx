@@ -39,7 +39,7 @@ export default function Contact() {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 rounded-lg bg-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 rounded-lg bg-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 placeholder="Your name"
               />
             </div>
@@ -52,7 +52,7 @@ export default function Contact() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 rounded-lg bg-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 rounded-lg bg-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 placeholder="Your email"
               />
             </div>
@@ -65,12 +65,19 @@ export default function Contact() {
                 onChange={handleChange}
                 required
                 rows="5"
-                className="w-full px-4 py-3 rounded-lg bg-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 rounded-lg bg-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 placeholder="Your message"
               />
             </div>
 
-            <button type="submit" className="btn-login w-full py-3 text-lg">
+            <button 
+              type="submit" 
+              className="w-full py-3 text-lg font-medium text-white rounded-lg transition-all duration-300
+                       bg-gradient-to-r from-yellow-500 via-orange-600 to-black
+                       hover:from-yellow-400 hover:via-orange-500 hover:to-gray-900
+                       focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-slate-800
+                       transform hover:scale-[1.02] active:scale-95"
+            >
               Send Message
             </button>
           </form>
