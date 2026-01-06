@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../api/axios';
 
 const AuthContext = createContext(null);
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1';
 
 export const AuthProvider = ({ children }) => {
   const normalizeUser = (user) => {
@@ -40,19 +40,16 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const callLogin = async (path, email, password) => {
-    const response = await fetch(`${API_BASE}${path}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
     try {
-      const data = await response.json();
-      return { ...data, ok: response.ok, status: response.status };
+      const response = await api.post(path, { email, password });
+      return { ...response.data, ok: true, status: response.status };
     } catch (err) {
-      return { success: false, message: 'Unable to parse server response' };
+      const message =
+        err.response?.data?.error?.message ||
+        err.response?.data?.message ||
+        err.message ||
+        'Login failed';
+      return { success: false, message, ok: false, status: err.response?.status };
     }
   };
 
@@ -62,9 +59,9 @@ export const AuthProvider = ({ children }) => {
     
     try {
       // Try user login first, then fall back to admin login for admin accounts
-      let data = await callLogin('/auth/user/login', email, password);
+      let data = await callLogin('auth/user/login', email, password);
       if (!data.success) {
-        const adminAttempt = await callLogin('/auth/admin/login', email, password);
+        const adminAttempt = await callLogin('auth/admin/login', email, password);
         data = adminAttempt;
       }
 
