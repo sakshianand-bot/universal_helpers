@@ -19,7 +19,7 @@ const app = express();
 app.use(helmet());
 
 app.use(cors({
-  origin: ['https://universal-helpers-j1p7-p6jdjsxte-sakshi-anands-projects.vercel.app'],
+  origin: "*",
   credentials: true,
 }))
 app.use(morgan('combined', { stream: { write: (msg) => logger.info(msg.trim()) } }));
