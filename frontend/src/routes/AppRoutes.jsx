@@ -33,7 +33,9 @@ function ProtectedRoute() {
   }
 
   if (!user) {
-    return <Navigate to="/login" replace state={{ from: window.location.pathname }} />;
+    const isAdminPath = window.location.pathname.startsWith('/admin');
+    const loginPath = isAdminPath ? '/admin/login' : '/login';
+    return <Navigate to={loginPath} replace state={{ from: window.location.pathname }} />;
   }
 
   return <Outlet />;
@@ -52,7 +54,9 @@ function AdminRoute() {
   }
 
   if (!user) {
-    return <Navigate to="/login" replace state={{ from: window.location.pathname }} />;
+    const isAdminPath = window.location.pathname.startsWith('/admin');
+    const loginPath = isAdminPath ? '/admin/login' : '/login';
+    return <Navigate to={loginPath} replace state={{ from: window.location.pathname }} />;
   }
 
   if (user.role !== 'admin') {
@@ -103,7 +107,7 @@ export default function AppRoutes() {
       {/* Public routes */}
       <Route element={<PublicRoute />}>
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/admin/login" element={<Login />} />
       </Route>
       
       {/* Main layout routes (with header and footer) */}

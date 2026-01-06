@@ -1,4 +1,5 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1';
+// Align base URL with axios client default to avoid mixed-content / wrong host errors
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'https://universal-helpers-1.onrender.com/api/v1').replace(/\/$/, '');
 
 // Get auth token from localStorage or sessionStorage
 const getAuthToken = () => {
