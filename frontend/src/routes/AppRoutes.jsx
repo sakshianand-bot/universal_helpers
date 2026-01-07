@@ -107,6 +107,7 @@ export default function AppRoutes() {
       {/* Public routes */}
       <Route element={<PublicRoute />}>
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/admin/login" element={<Login />} />
       </Route>
       
