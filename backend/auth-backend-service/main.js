@@ -12,6 +12,7 @@ const { errorHandler } = require("../internal/common/error-handler");
 const authRoutes = require("../internal/api/routes/auth.routes");
 const userRoutes = require("../internal/api/routes/user.routes");
 const adminRoutes = require("../internal/api/routes/admin.routes");
+const contactRoutes = require("../internal/api/routes/contact.routes");
 
 const app = express();
 
@@ -98,6 +99,7 @@ const apiPrefix = process.env.API_PREFIX || "/api/v1";
 app.use(`${apiPrefix}/auth`, authRoutes);
 app.use(`${apiPrefix}/users`, userRoutes);
 app.use(`${apiPrefix}/admin`, adminRoutes);
+app.use(`${apiPrefix}/contact`, contactRoutes);
 
 /* ======================
    ERROR HANDLING
@@ -128,7 +130,8 @@ const connectDB = async () => {
     logger.info("Connected to MongoDB successfully");
   } catch (error) {
     logger.error("MongoDB connection error:", error);
-    process.exit(1);
+    logger.warn("Starting server without database - using in-memory storage");
+    // Don't exit, continue with in-memory storage
   }
 };
 

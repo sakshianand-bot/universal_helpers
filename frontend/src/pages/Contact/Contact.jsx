@@ -29,18 +29,16 @@ export default function Contact() {
     e.preventDefault();
     
     try {
-      const response = await fetch(import.meta.env.VITE_WEB3FORMS_URL, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/v1/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
         },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
           service: formData.service,
           message: formData.message,
-          access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
         }),
       });
 
@@ -50,7 +48,7 @@ export default function Contact() {
         alert('Message sent successfully!');
         setFormData({ name: '', email: '', service: '', message: '' });
       } else {
-        alert('Failed to send message. Please try again.');
+        alert(result.message || 'Failed to send message. Please try again.');
       }
     } catch (error) {
       console.error('Form submission error:', error);
