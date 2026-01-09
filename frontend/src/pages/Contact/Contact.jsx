@@ -29,7 +29,7 @@ export default function Contact() {
     e.preventDefault();
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/v1/contact`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://universal-helpers-1.onrender.com'}/api/v1/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

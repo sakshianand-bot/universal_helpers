@@ -14,6 +14,31 @@ const ContactMessages = () => {
     fetchContacts();
   }, [statusFilter, currentPage]);
 
+
+  const getAuthToken = () => {
+  // Check for admin token first, then regular user token
+  const adminToken = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken');
+  if (adminToken) {
+    return adminToken;
+  }
+  
+  const user = localStorage.getItem('user') || sessionStorage.getItem('user');
+  if (user) {
+    const userData = JSON.parse(user);
+    return userData.token;
+  }
+  return null;
+};
+
+  const getAuthHeaders = () => {
+  const token = getAuthToken();
+  return {
+    'Content-Type': 'application/json',
+    ...(token && { 'Authorization': `Bearer ${token}` })
+  };
+};
+
+
   const fetchContacts = async () => {
     try {
       setLoading(true);
@@ -29,11 +54,9 @@ const ContactMessages = () => {
       }
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/v1/contact?${new URLSearchParams(params)}`,
+        `${import.meta.env.VITE_API_URL || 'https://universal-helpers-1.onrender.com'}/api/v1/contact?${new URLSearchParams(params)}`,
         {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          },
+          headers: getAuthHeaders(),
         }
       );
       
@@ -55,13 +78,10 @@ const ContactMessages = () => {
   const updateContactStatus = async (contactId, status) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/v1/contact/${contactId}/status`,
+        `${import.meta.env.VITE_API_URL || 'https://universal-helpers-1.onrender.com'}/api/v1/contact/${contactId}/status`,
         {
           method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          },
+          headers: getAuthHeaders(),
           body: JSON.stringify({ status }),
         }
       );
@@ -88,12 +108,10 @@ const ContactMessages = () => {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/v1/contact/${contactId}`,
+        `${import.meta.env.VITE_API_URL || 'https://universal-helpers-1.onrender.com'}/api/v1/contact/${contactId}`,
         {
           method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          },
+          headers: getAuthHeaders(),
         }
       );
       
