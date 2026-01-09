@@ -46,15 +46,15 @@ export default function Footer() {
                 <span className="w-1.5 h-1.5 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
                 Home
               </a></li>
-              <li><a href="#" className="text-gray-500 hover:text-blue-600 transition-colors flex items-center group">
+              <li><a href="/services" className="text-gray-500 hover:text-blue-600 transition-colors flex items-center group">
                 <span className="w-1.5 h-1.5 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
                 Services
               </a></li>
-              <li><a href="#" className="text-gray-500 hover:text-blue-600 transition-colors flex items-center group">
+              <li><a href="/about" className="text-gray-500 hover:text-blue-600 transition-colors flex items-center group">
                 <span className="w-1.5 h-1.5 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
                 About Us
               </a></li>
-              <li><a href="#" className="text-gray-500 hover:text-blue-600 transition-colors flex items-center group">
+              <li><a href="/contact" className="text-gray-500 hover:text-blue-600 transition-colors flex items-center group">
                 <span className="w-1.5 h-1.5 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
                 Contact
               </a></li>
