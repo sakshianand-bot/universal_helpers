@@ -83,6 +83,107 @@ const FAQItem = ({ question, answer }) => {
   );
 };
 
+// Sliding Banner Component
+const SlidingBanner = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  const slides = [
+    {
+      title: "Boost Your Credit Score Fast!",
+      subtitle: "Authorized User Tradelines - Add 50-200+ points in 30 days",
+      icon: <CreditCard className="h-8 w-8" />,
+      features: ["100% Legal & Compliant", "Guaranteed Results", "Quick Approval"]
+    },
+    {
+      title: "Premium Tradelines Available!",
+      subtitle: "Seasoned accounts with perfect payment history",
+      icon: <Award className="h-8 w-8" />,
+      features: ["Aged Accounts", "High Limits", "Immediate Impact"]
+    },
+    {
+      title: "Credit Repair Services!",
+      subtitle: "Remove negative items and rebuild your credit profile",
+      icon: <ShieldCheck className="h-8 w-8" />,
+      features: ["Dispute Items", "Credit Monitoring", "Expert Support"]
+    },
+    {
+      title: "Business Credit Building!",
+      subtitle: "Establish strong business credit in 90 days",
+      icon: <Building className="h-8 w-8" />,
+      features: ["Corporate Credit", "No Personal Guarantee", "Funding Ready"]
+    }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 1000); // Change slide every 800ms (less than 1 second)
+
+    return () => clearInterval(interval);
+  }, [slides.length]);
+
+  return (
+    <section className="relative bg-gradient-to-r from-amber-500 to-orange-600 text-white py-6 overflow-hidden">
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagonal-stripes.svg')] opacity-10"></div>
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="relative h-32 overflow-hidden">
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-all duration-700 ease-in-out ${
+                index === currentSlide 
+                  ? 'opacity-100 translate-x-0' 
+                  : index < currentSlide 
+                    ? 'opacity-0 -translate-x-full' 
+                    : 'opacity-0 translate-x-full'
+              }`}
+            >
+              <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0 h-full">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                    {slide.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-1">{slide.title}</h3>
+                    <p className="text-amber-100 text-lg">{slide.subtitle}</p>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4">
+                  {slide.features.map((feature, featureIndex) => (
+                    <div key={featureIndex} className="flex items-center space-x-2 text-amber-100">
+                      <BadgeCheck className="h-5 w-5" />
+                      <span className="font-semibold">{feature}</span>
+                    </div>
+                  ))}
+                  <button className="bg-white text-amber-600 font-bold py-3 px-6 rounded-full hover:bg-amber-50 transition-all duration-300 shadow-lg hover:scale-105 flex items-center space-x-2">
+                    <PhoneCall className="h-5 w-5" />
+                    <span>Get Started Now</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        {/* Slide indicators */}
+        <div className="flex justify-center space-x-2 mt-4">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === currentSlide 
+                  ? 'bg-white w-8' 
+                  : 'bg-white/50 hover:bg-white/75'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const Home = () => {
   const [visibleSections, setVisibleSections] = useState({})
   const sectionRefs = useRef({})
@@ -257,26 +358,26 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Hero Section - Split Theme */}
-      <section id="hero" className="relative bg-gradient-to-br from-blue-50 via-white to-white pt-16 lg:pt-24 pb-24 lg:pb-32 overflow-hidden">
+      {/* Hero Section - Blue-950 Theme */}
+      <section id="hero" className="relative bg-gradient-to-br from-blue-950 via-black to-blue-950 pt-8 lg:pt-12 pb-24 lg:pb-32 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-50/80 via-blue-50/50 to-white">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,_var(--tw-gradient-stops))] from-blue-100/40 via-transparent to-transparent"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,_var(--tw-gradient-stops))] from-blue-50/30 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 via-blue-950/50 to-blue-900/80">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,_var(--tw-gradient-stops))] from-blue-800/40 via-transparent to-transparent"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,_var(--tw-gradient-stops))] from-blue-900/30 via-transparent to-transparent"></div>
           </div>
-          <div className="absolute top-10 left-10 w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-          <div className="absolute top-20 right-20 w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
+          <div className="absolute top-10 left-10 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+          <div className="absolute top-20 right-20 w-1.5 h-1.5 bg-blue-300 rounded-full animate-pulse"></div>
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-blue-950">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-white">
                 Have
                 <span className="block">
-                  <span className="bg-gradient-to-r from-blue-800 to-blue-950 bg-clip-text text-transparent">Dominion</span>
+                  <span className="bg-gradient-to-r from-blue-200 to-blue-100 bg-clip-text text-transparent">Dominion</span>
                 </span>
               </h1>
-              <p className="text-lg text-blue-950/90 leading-relaxed">
+              <p className="text-lg text-blue-200 leading-relaxed">
                 Your pathway to privacy, financial independence, and professional mastery. 
                 Join our global conglomerate and build the life you deserve.
               </p>
@@ -297,23 +398,23 @@ const Home = () => {
                 </Link>
               </div>
               <div className="flex items-center space-x-6 text-sm">
-                <div className="flex items-center space-x-2 text-blue-700">
+                <div className="flex items-center space-x-2 text-blue-300">
                   <ShieldCheck className="h-4 w-4" />
                   <span>Privacy Focused</span>
                 </div>
-                <div className="flex items-center space-x-2 text-amber-700">
+                <div className="flex items-center space-x-2 text-amber-300">
                   <Award className="h-4 w-4" />
                   <span>Professional Training</span>
                 </div>
-                <div className="flex items-center space-x-2 text-blue-700">
+                <div className="flex items-center space-x-2 text-blue-300">
                   <Lock className="h-4 w-4" />
                   <span>Secure Services</span>
                 </div>
               </div>
             </div>
             <div className="relative">
-              <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
-                <div className="overflow-hidden rounded-2xl w-full h-80 bg-gradient-to-br from-blue-100 to-amber-50 relative shadow-lg">
+              <div className="bg-blue-950/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-blue-800/50">
+                <div className="overflow-hidden rounded-2xl w-full h-80 bg-gradient-to-br from-blue-900/50 to-black/50 relative shadow-lg">
                   <img 
                     src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                     alt="Building a secure future" 
@@ -323,11 +424,11 @@ const Home = () => {
                       e.target.src = 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-blue-500/10 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-950/80 via-blue-900/40 to-transparent"></div>
                   <div className="absolute bottom-6 left-6 right-6">
                     <div className="text-white text-left">
-                      <div className="text-2xl font-bold mb-2 text-blue-50">Build Your Private Future</div>
-                      <div className="text-sm opacity-90">From CDL Training to Financial Mastery</div>
+                      <div className="text-2xl font-bold mb-2 text-blue-100">Build Your Private Future</div>
+                      <div className="text-sm opacity-90 text-blue-200">From CDL Training to Financial Mastery</div>
                     </div>
                   </div>
                 </div>
@@ -336,6 +437,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Sliding Banner - Credit Services */}
+      <SlidingBanner />
 
       {/* Blue Services Section */}
       <section id="blue-services" className="py-16 bg-gradient-to-b from-blue-50 to-white">

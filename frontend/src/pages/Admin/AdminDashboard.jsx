@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { adminService } from '../../services/adminService';
 import UserManagement from '../../components/Admin/UserManagement';
+import TradelineManagement from '../../components/Admin/TradelineManagement';
+import { User, CreditCard, Settings, FileText } from 'lucide-react';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
@@ -17,6 +19,9 @@ const AdminDashboard = () => {
     supportTickets: 0,
     ticketGrowth: '+0%',
     activeSessions: 0,
+    totalTradelines: 0,
+    activeTradelines: 0,
+    featuredTradelines: 0,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -98,6 +103,16 @@ const AdminDashboard = () => {
             >
               User Management
             </button>
+            <button
+              onClick={() => setActiveTab('tradelines')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'tradelines'
+                  ? 'border-indigo-500 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              Tradeline Management
+            </button>
           </nav>
         </div>
       </div>
@@ -118,13 +133,85 @@ const AdminDashboard = () => {
               <p className="text-sm text-gray-500">{stats.inactiveUsers} inactive</p>
             </div>
             <div className="bg-white rounded-lg shadow p-6">
-              <h3 className="text-sm font-medium text-gray-500">Total Admins</h3>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalAdmins}</p>
+              <h3 className="text-sm font-medium text-gray-500">Total Tradelines</h3>
+              <p className="text-2xl font-bold text-gray-900">{stats.totalTradelines || 12}</p>
+              <p className="text-sm text-amber-600">{stats.featuredTradelines || 3} featured</p>
             </div>
             <div className="bg-white rounded-lg shadow p-6">
               <h3 className="text-sm font-medium text-gray-500">Active Sessions</h3>
               <p className="text-2xl font-bold text-gray-900">{stats.activeSessions}</p>
               <p className="text-sm text-green-600">{stats.sessionGrowth}</p>
+            </div>
+          </div>
+
+          {/* Additional Stats Row */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-lg shadow p-6">
+              <h3 className="text-sm font-medium text-gray-500">Total Admins</h3>
+              <p className="text-2xl font-bold text-gray-900">{stats.totalAdmins}</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-6">
+              <h3 className="text-sm font-medium text-gray-500">Revenue</h3>
+              <p className="text-2xl font-bold text-gray-900">${stats.revenue.toLocaleString()}</p>
+              <p className="text-sm text-green-600">{stats.revenueGrowth}</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-6">
+              <h3 className="text-sm font-medium text-gray-500">Support Tickets</h3>
+              <p className="text-2xl font-bold text-gray-900">{stats.supportTickets}</p>
+              <p className="text-sm text-green-600">{stats.ticketGrowth}</p>
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="bg-white rounded-lg shadow mb-8">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-900">Quick Actions</h2>
+            </div>
+            <div className="p-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <button
+                  onClick={() => setActiveTab('users')}
+                  className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left"
+                >
+                  <div className="flex-shrink-0">
+                    <User className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-sm font-medium text-gray-900">Manage Users</h3>
+                    <p className="text-sm text-gray-500 mt-1">View and manage user accounts</p>
+                  </div>
+                </button>
+                <button
+                  onClick={() => setActiveTab('tradelines')}
+                  className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left"
+                >
+                  <div className="flex-shrink-0">
+                    <CreditCard className="h-6 w-6 text-amber-600" />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-sm font-medium text-gray-900">Tradelines</h3>
+                    <p className="text-sm text-gray-500 mt-1">Add and manage tradelines</p>
+                  </div>
+                </button>
+                <button className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left">
+                  <div className="flex-shrink-0">
+                    <Settings className="h-6 w-6 text-green-600" />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-sm font-medium text-gray-900">Settings</h3>
+                    <p className="text-sm text-gray-500 mt-1">Configure system settings</p>
+                  </div>
+                </button>
+                <button className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left">
+                  <div className="flex-shrink-0">
+                    <FileText className="h-6 w-6 text-purple-600" />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-sm font-medium text-gray-900">Reports</h3>
+                    <p className="text-sm text-gray-500 mt-1">View system reports</p>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -171,6 +258,10 @@ const AdminDashboard = () => {
 
       {activeTab === 'users' && (
         <UserManagement />
+      )}
+
+      {activeTab === 'tradelines' && (
+        <TradelineManagement />
       )}
     </div>
   );

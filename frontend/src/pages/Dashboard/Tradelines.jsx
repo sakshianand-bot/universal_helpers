@@ -1,182 +1,84 @@
-import React, { useState } from 'react';
-import { CreditCard, Calendar, TrendingUp, DollarSign, Filter, Search, Star, Shield, Clock } from 'lucide-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { CreditCard, Calendar, TrendingUp, DollarSign, Search, Shield, Clock } from 'lucide-react';
+import { tradelineService } from '../../services/tradelineService';
 
 const Tradelines = () => {
+  const [tradelines, setTradelines] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedAge, setSelectedAge] = useState('all');
   const [selectedLimit, setSelectedLimit] = useState('all');
   const [sortBy, setSortBy] = useState('age');
 
-  // Sample tradeline data based on the reference website
-  const tradelines = [
-    {
-      id: 'TL-009',
-      bank: 'PNC Core',
-      lastFour: '7442',
-      statementDate: 11,
-      utilization: 2,
-      age: 9,
-      creditLimit: 25000,
-      price: 515,
-      rating: 4.8,
-      available: true,
-      featured: true
-    },
-    {
-      id: 'TL-005',
-      bank: 'Wells Fargo Active Cash',
-      lastFour: '5532',
-      statementDate: 6,
-      utilization: 3,
-      age: 8,
-      creditLimit: 22000,
-      price: 480,
-      rating: 4.7,
-      available: true,
-      featured: true
-    },
-    {
-      id: 'TL-003',
-      bank: 'Discover It',
-      lastFour: '2210',
-      statementDate: 3,
-      utilization: 4,
-      age: 5,
-      creditLimit: 18000,
-      price: 410,
-      rating: 4.6,
-      available: true,
-      featured: false
-    },
-    {
-      id: 'TL-008',
-      bank: 'Amex Blue Cash',
-      lastFour: '3054',
-      statementDate: 25,
-      utilization: 8,
-      age: 5,
-      creditLimit: 14000,
-      price: 360,
-      rating: 4.5,
-      available: true,
-      featured: false
-    },
-    {
-      id: 'TL-010',
-      bank: 'Barclays Arrival',
-      lastFour: '9820',
-      statementDate: 28,
-      utilization: 6,
-      age: 4,
-      creditLimit: 13000,
-      price: 335,
-      rating: 4.4,
-      available: true,
-      featured: false
-    },
-    {
-      id: 'TL-001',
-      bank: 'Chase Sapphire',
-      lastFour: '4821',
-      statementDate: 12,
-      utilization: 5,
-      age: 6,
-      creditLimit: 15000,
-      price: 389,
-      rating: 4.9,
-      available: true,
-      featured: true
-    },
-    {
-      id: 'TL-007',
-      bank: 'Capital One Venture',
-      lastFour: '6405',
-      statementDate: 21,
-      utilization: 5,
-      age: 7,
-      creditLimit: 16000,
-      price: 430,
-      rating: 4.7,
-      available: true,
-      featured: false
-    },
-    {
-      id: 'TL-002',
-      bank: 'Bank of America Cash Rewards',
-      lastFour: '9034',
-      statementDate: 9,
-      utilization: 7,
-      age: 4,
-      creditLimit: 12000,
-      price: 345,
-      rating: 4.3,
-      available: true,
-      featured: false
-    },
-    {
-      id: 'TL-006',
-      bank: 'US Bank Altitude',
-      lastFour: '1188',
-      statementDate: 18,
-      utilization: 9,
-      age: 2,
-      creditLimit: 9000,
-      price: 275,
-      rating: 4.2,
-      available: false,
-      featured: false
-    },
-    {
-      id: 'TL-004',
-      bank: 'Citi Premier',
-      lastFour: '7719',
-      statementDate: 15,
-      utilization: 6,
-      age: 3,
-      creditLimit: 10000,
-      price: 320,
-      rating: 4.4,
-      available: true,
-      featured: false
-    }
-  ];
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const res = await tradelineService.getPublicTradelines();
+        setTradelines(res.data || []);
+      } catch (err) {
+        setError(err.message || 'Failed to load tradelines');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
-  // Filter tradelines based on search and filters
-  const filteredTradelines = tradelines.filter(tradeline => {
-    const matchesSearch = tradeline.bank.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         tradeline.lastFour.includes(searchTerm);
-    const matchesAge = selectedAge === 'all' || 
-                      (selectedAge === '2-4' && tradeline.age >= 2 && tradeline.age <= 4) ||
-                      (selectedAge === '5-7' && tradeline.age >= 5 && tradeline.age <= 7) ||
-                      (selectedAge === '8+' && tradeline.age >= 8);
-    const matchesLimit = selectedLimit === 'all' ||
-                        (selectedLimit === '10k-15k' && tradeline.creditLimit >= 10000 && tradeline.creditLimit <= 15000) ||
-                        (selectedLimit === '15k-20k' && tradeline.creditLimit >= 15000 && tradeline.creditLimit <= 20000) ||
-                        (selectedLimit === '20k+' && tradeline.creditLimit >= 20000);
-    
-    return matchesSearch && matchesAge && matchesLimit;
-  }).sort((a, b) => {
-    if (sortBy === 'age') return b.age - a.age;
-    if (sortBy === 'limit') return b.creditLimit - a.creditLimit;
-    if (sortBy === 'price') return a.price - b.price;
-    if (sortBy === 'rating') return b.rating - a.rating;
-    return 0;
-  });
+  const filteredTradelines = useMemo(() => {
+    return tradelines
+      .filter((tradeline) => {
+        // Only show active with available slots
+        if (tradeline.status !== 'active' || (tradeline.availableSlots ?? 0) <= 0) return false;
 
-  const getUtilizationColor = (util) => {
-    if (util <= 3) return 'text-emerald-600 bg-emerald-50';
-    if (util <= 6) return 'text-amber-600 bg-amber-50';
-    return 'text-red-600 bg-red-50';
-  };
+        const bank = (tradeline.bankName || '').toLowerCase();
+        const matchesSearch = bank.includes(searchTerm.toLowerCase());
 
-  const getAgeBadgeColor = (age) => {
-    if (age >= 8) return 'bg-purple-100 text-purple-800';
-    if (age >= 5) return 'bg-blue-100 text-blue-800';
-    return 'bg-gray-100 text-gray-800';
-  };
+        const ageYears = (tradeline.cardAgeMonths || 0) / 12;
+        const matchesAge =
+          selectedAge === 'all' ||
+          (selectedAge === '2-4' && ageYears >= 2 && ageYears <= 4) ||
+          (selectedAge === '5-7' && ageYears >= 5 && ageYears <= 7) ||
+          (selectedAge === '8+' && ageYears >= 8);
+
+        const limitVal = tradeline.creditLimitMax ?? tradeline.creditLimitMin ?? 0;
+        const matchesLimit =
+          selectedLimit === 'all' ||
+          (selectedLimit === '10k-15k' && limitVal >= 10000 && limitVal <= 15000) ||
+          (selectedLimit === '15k-20k' && limitVal >= 15000 && limitVal <= 20000) ||
+          (selectedLimit === '20k+' && limitVal >= 20000);
+
+        return matchesSearch && matchesAge && matchesLimit;
+      })
+      .sort((a, b) => {
+        const ageA = (a.cardAgeMonths || 0) / 12;
+        const ageB = (b.cardAgeMonths || 0) / 12;
+        const limitA = a.creditLimitMax ?? a.creditLimitMin ?? 0;
+        const limitB = b.creditLimitMax ?? b.creditLimitMin ?? 0;
+        const priceA = a.placementFee ?? 0;
+        const priceB = b.placementFee ?? 0;
+
+        if (sortBy === 'age') return ageB - ageA;
+        if (sortBy === 'limit') return limitB - limitA;
+        if (sortBy === 'price') return priceA - priceB;
+        return 0;
+      });
+  }, [tradelines, searchTerm, selectedAge, selectedLimit, sortBy]);
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3">
+          {error}
+        </div>
+      )}
+      {loading && (
+        <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3">
+          Loading tradelines...
+        </div>
+      )}
       {/* Header */}
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -265,10 +167,10 @@ const Tradelines = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTradelines.map((tradeline) => (
             <div
-              key={tradeline.id}
+              key={tradeline._id}
               className={`bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border ${
                 tradeline.featured ? 'border-amber-400' : 'border-gray-200'
-              } ${!tradeline.available ? 'opacity-75' : ''}`}
+              } ${(tradeline.availableSlots ?? 0) <= 0 ? 'opacity-75' : ''}`}
             >
               {/* Featured Badge */}
               {tradeline.featured && (
@@ -281,12 +183,15 @@ const Tradelines = () => {
                 {/* Header */}
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">{tradeline.bank}</h3>
-                    <p className="text-sm text-gray-600">****{tradeline.lastFour}</p>
+                    <h3 className="text-lg font-semibold text-gray-900">{tradeline.bankName}</h3>
+                    <p className="text-sm text-gray-600">Slots available: {tradeline.availableSlots}</p>
                   </div>
                   <div className="flex items-center space-x-1">
-                    <Star className="h-4 w-4 text-amber-400 fill-current" />
-                    <span className="text-sm font-medium text-gray-700">{tradeline.rating}</span>
+                    {tradeline.featured && (
+                      <span className="text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-1 rounded-full border border-amber-200">
+                        Featured
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -295,21 +200,11 @@ const Tradelines = () => {
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center text-gray-600">
                       <Calendar className="h-4 w-4 mr-2" />
-                      <span>Statement: {tradeline.statementDate}th</span>
+                      <span>Age: {(tradeline.cardAgeMonths || 0) / 12} yrs</span>
                     </div>
-                    <div className={`px-2 py-1 rounded-full text-xs font-medium ${getUtilizationColor(tradeline.utilization)}`}>
-                      Util: {tradeline.utilization}%
+                    <div className="px-2 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700">
+                      Status: {tradeline.status}
                     </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center text-gray-600">
-                      <Clock className="h-4 w-4 mr-2" />
-                      <span className="text-sm">Age: {tradeline.age} yrs</span>
-                    </div>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getAgeBadgeColor(tradeline.age)}`}>
-                      {tradeline.age >= 8 ? 'Excellent' : tradeline.age >= 5 ? 'Good' : 'Fair'}
-                    </span>
                   </div>
                 </div>
 
@@ -319,19 +214,19 @@ const Tradelines = () => {
                     <div>
                       <p className="text-sm text-gray-600">Credit Limit</p>
                       <p className="text-2xl font-bold text-gray-900">
-                        ${tradeline.creditLimit.toLocaleString()}
+                        ${(tradeline.creditLimitMax ?? tradeline.creditLimitMin ?? 0).toLocaleString()}
                       </p>
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-gray-600">Price</p>
                       <p className="text-2xl font-bold text-amber-600">
-                        ${tradeline.price}
+                        ${tradeline.placementFee ?? 0}
                       </p>
                     </div>
                   </div>
 
                   {/* Action Button */}
-                  {tradeline.available ? (
+                  {(tradeline.availableSlots ?? 0) > 0 ? (
                     <button className="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center">
                       <CreditCard className="h-4 w-4 mr-2" />
                       View Details

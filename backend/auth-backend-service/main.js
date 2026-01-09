@@ -12,6 +12,10 @@ const { errorHandler } = require('../internal/common/error-handler');
 const authRoutes = require('../internal/api/routes/auth.routes');
 const userRoutes = require('../internal/api/routes/user.routes');
 const adminRoutes = require('../internal/api/routes/admin.routes');
+const tradelineRoutes = require('../internal/api/routes/tradeline.routes');
+const requestRoutes = require('../internal/api/routes/request.routes');
+const adminTradelineRoutes = require('../internal/api/routes/admin.tradeline.routes');
+const adminRequestRoutes = require('../internal/api/routes/admin.request.routes');
 
 const app = express();
 
@@ -19,9 +23,14 @@ const app = express();
 app.use(helmet());
 
 app.use(cors({
-  origin: ["https://universal-helpers-j1p7-git-main-sakshi-anands-projects.vercel.app", "https://universal-helpers-j1p7.vercel.app"],
+  origin: [
+    "https://universal-helpers-j1p7-git-main-sakshi-anands-projects.vercel.app",
+    "https://universal-helpers-j1p7.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:5174",
+  ],
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 }))
 app.use(morgan('combined', { stream: { write: (msg) => logger.info(msg.trim()) } }));
 app.use(express.json());  
@@ -41,6 +50,10 @@ const apiPrefix = process.env.API_PREFIX || '/api/v1';
 app.use(`${apiPrefix}/auth`, authRoutes);
 app.use(`${apiPrefix}/users`, userRoutes);
 app.use(`${apiPrefix}/admin`, adminRoutes);
+app.use(`${apiPrefix}/tradelines`, tradelineRoutes);
+app.use(`${apiPrefix}/requests`, requestRoutes);
+app.use(`${apiPrefix}/admin/tradelines`, adminTradelineRoutes);
+app.use(`${apiPrefix}/admin/requests`, adminRequestRoutes);
 
 // 404 handler
 app.use((req, res) => {
