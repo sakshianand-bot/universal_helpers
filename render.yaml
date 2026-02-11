@@ -24,6 +24,8 @@ services:
         generateValue: true
       - key: LOG_LEVEL
         value: info
+      - key: CORS_ORIGINS
+        value: http://localhost:5173,http://localhost:3000,https://universal-helpers-j1p7-git-main-sakshi-anands-projects.vercel.app,https://universal-helpers-j1p7.vercel.app
 
   # MongoDB Database
   - type: pserv

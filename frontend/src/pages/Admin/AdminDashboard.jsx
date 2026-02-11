@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+  import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { adminService } from '../../services/adminService';
 import UserManagement from '../../components/Admin/UserManagement';
 import TradelineManagement from '../../components/Admin/TradelineManagement';
+import ContactMessages from '../../components/Admin/ContactMessages';
 import { User, CreditCard, Settings, FileText } from 'lucide-react';
 
 const AdminDashboard = () => {
@@ -112,6 +113,16 @@ const AdminDashboard = () => {
               }`}
             >
               Tradeline Management
+            </button>
+            <button
+              onClick={() => setActiveTab('contacts')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'contacts'
+                  ? 'border-indigo-500 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              Contact Messages
             </button>
           </nav>
         </div>
@@ -262,6 +273,9 @@ const AdminDashboard = () => {
 
       {activeTab === 'tradelines' && (
         <TradelineManagement />
+      )}
+      {activeTab === 'contacts' && (
+        <ContactMessages />
       )}
     </div>
   );
